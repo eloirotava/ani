@@ -103,7 +103,7 @@ class H(BaseHTTPRequestHandler):
     def do_GET(self):
         if self.path == "/":
             self._send(200, PAGE.format(state=state), "text/html")
-        elif self.path == "/ani":
+        elif self.path in ("/ani", "/help"):
             self._send(200, ANI, "text/markdown")
         elif self.path == "/ani/state":
             self._json(200, state)

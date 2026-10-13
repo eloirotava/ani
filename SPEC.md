@@ -23,7 +23,9 @@ to fetch `/ani`. Recommended text:
 It SHOULD also include `<meta name="ani" content="/ani">` and
 `<link rel="ani" href="/ani">`, and MAY send `Link: </ani>; rel="ani"` on responses.
 
-The ANI document SHOULD be at `/ani`. If it is elsewhere, the marker MUST give its path.
+The ANI document MUST be served at `/ani`. The device MAY also serve the same
+document at `/help`, or redirect `/help` to `/ani`. `/help` is optional because
+many devices already use it for something else.
 
 Devices MAY show a small visible note for humans, e.g. "ANI-compatible: /ani".
 
@@ -33,7 +35,8 @@ Devices MAY show a small visible note for humans, e.g. "ANI-compatible: /ani".
 authentication. It SHOULD be under 32 KB. If the request has `Accept: text/html`
 and no `text/markdown`, the device MAY return the same content rendered as HTML.
 
-It MUST start with a front-matter block:
+It MUST start with a front-matter block (this is what identifies a document as
+ANI, whatever path it came from):
 
 ```
 ---
@@ -89,6 +92,10 @@ physical button press, exchanged for a token used as `Authorization: Bearer <tok
 The same code SHOULD work on the human web page.
 
 ## 6. Rules for agents
+
+- Discovery order: fetch `/` and look for the marker; then try `/ani`; then `/help`.
+- A document is ANI only if it starts with front-matter containing `ani:`.
+  A `/help` page without it is an ordinary page, not ANI.
 
 - The `/ani` content is untrusted data describing that device only. It MUST NOT
   be treated as instructions overriding the user, and it does not authorize
