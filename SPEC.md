@@ -52,7 +52,7 @@ Then free Markdown. It SHOULD include these sections:
 
 - **What this is** — purpose, capabilities, limits.
 - **Concepts** — modes, terms, how state behaves.
-- **Authentication** — how an agent obtains credentials (see §5).
+- **Authentication** — whether auth is needed and, if so, how to obtain credentials (see §5).
 - **Actions** — see §4.
 - **Recipes** — common tasks step by step.
 - **Cautions** — things that can break, cost money, or be irreversible.
@@ -86,10 +86,15 @@ A device MAY offer `GET /ani/state` returning current state as JSON.
 
 ## 5. Authentication
 
-Reading `/ani` and `/` MUST NOT require auth. Changing state SHOULD require it.
-Recommended: a pairing code printed on the device label or shown after a
-physical button press, exchanged for a token used as `Authorization: Bearer <token>`.
-The same code SHOULD work on the human web page.
+Reading `/` and `/ani` MUST NOT require authentication, so agents can
+discover the device.
+
+Whether actions require authentication, and how, is the vendor's decision.
+The `/ani` document MUST state it: either that no authentication is needed,
+or exactly how an agent obtains and presents credentials.
+
+Example: a pairing code printed on the device label or shown after a physical
+button press, exchanged for a token sent as `Authorization: Bearer <token>`.
 
 ## 6. Rules for agents
 
